@@ -9,8 +9,7 @@ class CrawlingSpider(CrawlSpider):
     custom_settings = {
         'ROBOTSTXT_OBEY': False,
         'DOWNLOAD_DELAY': 5,
-        'CLOSESPIDER_PAGECOUNT': 10,
-        'DEPTH_LIMIT': 1,
+        'RANDOMIZE_DOWNLOAD_DELAY': True
     }
 
     rules = (
