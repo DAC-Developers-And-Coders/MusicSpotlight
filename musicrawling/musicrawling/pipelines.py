@@ -20,8 +20,5 @@ class MongoPipeline:
         self.client.close()
 
     def process_item(self, item, spider):
-        if 'nametag' in item and item['nametag']:
-            item['nametag'] = item['nametag'].strip()
-
-        self.db[self.mongo_db].insert_one(dict(item))
+        self.db['music'].insert_one(dict(item))
         return item
