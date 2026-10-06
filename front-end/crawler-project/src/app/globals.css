@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face{
+  font-family: DM-Sans;
+  src: url(/assets/fonts/DMSans-VariableFont_opsz,wght.ttf);
+}
+
+@font-face{
+  font-family: Space-Grotesk;
+  src: url(/assets/fonts/SpaceGrotesk-VariableFont_wght.ttf);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-title: Space-Grotesk;
+  --font-text: DM-Sans;
+
+  --color-background: #181616;
+  --color-header: #221f1f;
+  --color-title: #F5E6D3;
+  --color-text: #D1C7BD;
+  --color-button: #D4AF37;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
   }
-}
+  
+  body {
+    background-color: var(--color-background);
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  ul {
+      list-style: none;
+  }
+
+  a {
+      text-decoration: none;
+      font-family: var(--font-text);
+  }
+
+  h1 {
+      font-family: var(--font-title);
+      color: var(--color-title);
+  }
+
+  h3 {
+      font-family: var(--font-title);
+      color: var(--color-title);
+  }
+
+  h2 {
+      font-family: var(--font-title);
+      color: var(--color-title);
+  }
+
+  p {
+      font-family: var(--font-text);
+      color: var(--color-text);
+  }
+
+  input {
+      font-family: var(--font-text);
+      color: var(--color-text);
+  }
+
+  button {
+      font-family: var(--font-text);
+  }
 }
