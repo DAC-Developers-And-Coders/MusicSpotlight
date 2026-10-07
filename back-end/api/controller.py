@@ -23,3 +23,6 @@ def get_all_albums():
 
 def get_all_artists():
     return service.get_all_artists()
+
+def get_all_tracks():
+    return service.get_all_tracks()

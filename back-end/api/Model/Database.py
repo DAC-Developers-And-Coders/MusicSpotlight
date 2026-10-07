@@ -29,8 +29,11 @@ class Database:
         albums = self.DATABASE['albums'].find({}, {"_id": 0, "name": 1, "listeners": 1, "url": 1, "time": 1})
 
         albums_to_return = []
+        seen_names = set()
+
         for album in albums:
-            if album['name'] not in albums_to_return:
+            if album['name'] not in seen_names:
+                seen_names.add(album['name'])
                 albums_to_return.append(album)
         return albums_to_return
 
@@ -38,10 +41,25 @@ class Database:
         artists = self.DATABASE['artists'].find({}, {"_id": 0, "name": 1, "listeners": 1, "url": 1, "time": 1})
 
         artists_to_return = []
+        seen_names = set()
+
         for artist in artists:
-            if artist['name'] not in artists_to_return:
+            if artist['name'] not in seen_names:
+                seen_names.add(artist['name'])
                 artists_to_return.append(artist)
         return artists_to_return
+
+    def get_all_tracks(self):
+        tracks = self.DATABASE['tracks'].find({}, {"_id": 0, "name": 1, "url": 1, "time": 1})
+
+        tracks_to_return = []
+        seen_names = set()
+
+        for track in tracks:
+            if track['name'] not in seen_names:
+                seen_names.add(track['name'])
+                tracks_to_return.append(track)
+        return tracks_to_return
 
     def close(self):
         self.client.close()

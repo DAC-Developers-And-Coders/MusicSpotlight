@@ -2,7 +2,7 @@ from scrapy import Spider
 from curl_cffi import requests
 from scrapy.http import HtmlResponse
 
-from datetime import datetime, timezone
+from datetime import datetime
 from musicrawling.items import TrackItem, ArtistItem, AlbumItem
 
 
@@ -30,7 +30,7 @@ class ChartSpider(Spider):
 
         tracks_lines = top_tracks.css("tr.globalchart-item")
 
-        scrap_time = datetime.now(timezone.utc)
+        scrap_time = datetime.now()
 
         for line in tracks_lines:
             rank = line.css("td.globalchart-rank::text").get()
@@ -48,7 +48,7 @@ class ChartSpider(Spider):
 
         artists_lines = top_artists.css("tr.globalchart-item")
 
-        scrap_time = datetime.now(timezone.utc)
+        scrap_time = datetime.now()
 
         for line in artists_lines:
             rank = line.css("td.globalchart-rank::text").get()
@@ -64,7 +64,7 @@ class ChartSpider(Spider):
 
         releases_lines = top_releases.css("tr.globalchart-item")
 
-        scrap_time = datetime.now(timezone.utc)
+        scrap_time = datetime.now()
 
         for line in releases_lines:
             rank = line.css("td.globalchart-rank::text").get()

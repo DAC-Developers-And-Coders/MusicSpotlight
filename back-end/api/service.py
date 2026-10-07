@@ -1,5 +1,5 @@
 from Model.Database import Database as Db
-from Model.Items import ArtistItem, AlbumItem, TrackItem, AlbumArtistItem
+from Model.Items import ArtistItem, AlbumItem, TrackItem, AlbumArtistItem, TrackSimplifiedItem
 
 database = Db()
 
@@ -34,3 +34,7 @@ def get_all_albums():
 def get_all_artists():
     all_artists = database.get_all_artists()
     return [AlbumArtistItem(**artist) for artist in all_artists]
+
+def get_all_tracks():
+    all_tracks = database.get_all_tracks()
+    return [TrackSimplifiedItem(**track) for track in all_tracks]

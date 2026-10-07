@@ -40,3 +40,8 @@ class AlbumArtistItem(BaseModel):
     listeners: int | None = None
     url: str
     time: datetime
+
+class TrackSimplifiedItem(BaseModel):
+    name: str
+    url: str
+    time: datetime

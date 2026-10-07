@@ -2,7 +2,7 @@ from scrapy import Spider
 from curl_cffi import requests
 from scrapy.http import HtmlResponse
 
-from datetime import datetime, timezone
+from datetime import datetime
 from musicrawling.items import TrackItem, ArtistItem, AlbumItem
 
 
@@ -111,7 +111,7 @@ class TagSpider(Spider):
         top_tracks = response.xpath('//section[@id="top-tracks-section"]//table[contains(@class, chartlist)]'
                                     '//tr[contains(@class, "chartlist-row")]')
 
-        scrap_time = datetime.now(timezone.utc)
+        scrap_time = datetime.now()
 
         for line in top_tracks:
             rank = line.css("td.chartlist-index::text").get()
@@ -127,7 +127,7 @@ class TagSpider(Spider):
         top_artists = response.xpath('//section[@class="grid-items-section"]//ol[@class="big-artist-list"]'
                                     '//li[@class="big-artist-list-wrap"]/div[contains(@class, "big-artist-list-item")]')
 
-        scrap_time = datetime.now(timezone.utc)
+        scrap_time = datetime.now()
 
         i = 0
         for line in top_artists:
@@ -146,7 +146,7 @@ class TagSpider(Spider):
                                     '//li[contains(@class, resource-list--release-list-item-wrap)]'
                                     '/div[contains(@class, resource-list--release-list-item)]')
 
-        scrap_time = datetime.now(timezone.utc)
+        scrap_time = datetime.now()
 
         i = 0
         for line in top_albums:
