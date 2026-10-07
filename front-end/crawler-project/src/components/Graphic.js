@@ -1,7 +1,7 @@
 "use client"
 
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { top10Musics, top10Artists, top10NewMusics } from "@/data/musicData";
+import { top10Musics, top10Artists, top10NewAlbuns } from "@/data/musicData";
 
 const COLORS = [
   "#1DB954", "#8B5CF6", "#EC4899", "#D4AF37", "#3B82F6", 

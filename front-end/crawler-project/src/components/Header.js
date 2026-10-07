@@ -1,6 +1,6 @@
 "use client"
 
-const Header = () =>
+const Header = ({selectedTag, setSelectedTag}) =>
 {
     return(
         <header className="bg-header h-13 grid grid-cols-3 items-center px-5 sticky top-0 z-50 left-0 right-0">
@@ -11,7 +11,8 @@ const Header = () =>
                 <h1 className="font-bold text-4xl">MusicSpotlight</h1>
             </div>
             <div className="flex justify-end">
-                <input placeholder="Filtre o gênero" className="bg-white/5 text-center h-7 w-48 border-2 border-white/20 rounded-xl focus:border-text"></input>
+                <input placeholder="Filtre o gênero" className="bg-white/5 text-center h-7 w-48 border-2 border-white/20 rounded-xl focus:border-text"
+                type="text" value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}/>
             </div>
         </header>
     )
