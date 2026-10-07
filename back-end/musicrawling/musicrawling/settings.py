@@ -16,7 +16,7 @@ ADDONS = {}
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "musicrawling (+http://www.yourdomain.com)"
+USER_AGENT = "musicrawling (educational project)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -24,7 +24,8 @@ ROBOTSTXT_OBEY = True
 # Concurrency and throttling settings
 #CONCURRENT_REQUESTS = 16
 CONCURRENT_REQUESTS_PER_DOMAIN = 1
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY_JITTER = 1
 
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED = False
@@ -58,9 +59,11 @@ DOWNLOAD_DELAY = 1
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "musicrawling.pipelines.MusicrawlingPipeline": 300,
-#}
+ITEM_PIPELINES = {
+    "musicrawling.pipelines.ValidationPipeline": 100,
+    "musicrawling.pipelines.NormalizePipeline": 200,
+    "musicrawling.pipelines.DuplicatesPipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

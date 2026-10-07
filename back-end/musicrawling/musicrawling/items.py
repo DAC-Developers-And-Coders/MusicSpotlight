@@ -3,11 +3,25 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-from dataclasses import dataclass
+from scrapy.item import Item, Field
 
 
-@dataclass
-class MusicrawlingItem:
-    # define the fields for your item here like:
-    # name: str | None = None
-    pass
+class TrackItem(Item):
+    rank = Field()
+    name = Field()
+    artist = Field()
+    cover = Field()
+    url = Field()
+    chart = Field()
+    time = Field()
+    tag = Field()
+
+class ArtistItem(Item):
+    rank = Field()
+    name = Field()
+    image = Field()
+    listeners = Field()
+    url = Field()
+    chart = Field()
+    time = Field()
+    tag = Field()
