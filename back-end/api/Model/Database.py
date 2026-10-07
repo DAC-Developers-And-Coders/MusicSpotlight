@@ -26,7 +26,7 @@ class Database:
         return self.DATABASE['albums'].find({"chart": "top_albums", "tag": tag}).limit(10)
 
     def get_all_albums(self):
-        albums = self.DATABASE['albums'].find({}, {"_id": 0, "name": 1, "listeners": 1, "url": 1})
+        albums = self.DATABASE['albums'].find({}, {"_id": 0, "name": 1, "listeners": 1, "url": 1, "time": 1})
 
         albums_to_return = []
         for album in albums:
@@ -35,7 +35,7 @@ class Database:
         return albums_to_return
 
     def get_all_artists(self):
-        artists = self.DATABASE['artists'].find({}, {"_id": 0, "name": 1, "listeners": 1, "url": 1})
+        artists = self.DATABASE['artists'].find({}, {"_id": 0, "name": 1, "listeners": 1, "url": 1, "time": 1})
 
         artists_to_return = []
         for artist in artists:

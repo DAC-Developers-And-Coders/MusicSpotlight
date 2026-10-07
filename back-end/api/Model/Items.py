@@ -39,3 +39,4 @@ class AlbumArtistItem(BaseModel):
     name: str
     listeners: int | None = None
     url: str
+    time: datetime
