@@ -11,6 +11,7 @@ const COLORS = [
 const Graphic = () => {
     const [albuns, setAlbuns] = useState([])
     const [artists, setArtists] = useState([])
+    const [tracks, setTracks] = useState([])
     const [lastCrawlerTime, setLastCrawlerTime] = useState(null)
     const [loading, setLoading] = useState(false)
 
@@ -18,18 +19,21 @@ const Graphic = () => {
         async function fetchGraphicData() {
             setLoading(true)
             try {
-                const [resAlbuns, resArtists] = await Promise.all([
+                const [resAlbuns, resArtists, resTracks] = await Promise.all([
                     fetch("http://localhost:8000/all/AL").catch(() => null),
-                    fetch("http://localhost:8000/all/AR").catch(() => null)
+                    fetch("http://localhost:8000/all/AR").catch(() => null),
+                    fetch("http://localhost:8000/all/TR").catch(() => null)
                 ])
 
                 const dataAlbuns = resAlbuns?.ok ? await resAlbuns.json() : []
                 const dataArtists = resArtists?.ok ? await resArtists.json() : []
+                const dataTracks = resTracks?.ok ? await resTracks.json() : []
 
                 const listAlbuns = Array.isArray(dataAlbuns) ? dataAlbuns : []
                 const listArtists = Array.isArray(dataArtists) ? dataArtists : []
+                const listTracks = Array.isArray(dataTracks) ? dataTracks : []
 
-                const newestTime = listAlbuns[0]?.time || listArtists[0]?.time || null
+                const newestTime = listAlbuns[0]?.time || listArtists[0]?.time || listTracks[0]?.time || null
                 if (newestTime) {
                     const parsedDate = new Date(newestTime)
                     const formattedDate = parsedDate.toLocaleDateString("pt-BR")
@@ -51,10 +55,12 @@ const Graphic = () => {
 
                 setAlbuns(formattedAlbuns)
                 setArtists(formattedArtists)
+                setTracks(listTracks)
             } catch (error) {
                 console.error("Erro ao buscar dados do endpoint /all no FastAPI:", error)
                 setAlbuns([])
                 setArtists([])
+                setTracks([])
             } finally {
                 setLoading(false)
             }
@@ -73,6 +79,7 @@ const Graphic = () => {
 
     const totalOuvintesAlbuns = albuns.reduce((acc, curr) => acc + (curr.listeners || 0), 0)
     const totalOuvintesArtistas = artists.reduce((acc, curr) => acc + (curr.listeners || 0), 0)
+    const totalOuvintesTracks = tracks.reduce((acc, curr) => acc + (curr.listeners || 0), 0)
 
     const renderClickableLegend = (value, entry) => {
         const itemUrl = entry?.payload?.url
@@ -157,9 +164,14 @@ const Graphic = () => {
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center bg-header border-2 p-4 rounded-2xl gap-10 justify-center">
+                    <div className="flex flex-col items-center bg-header border-2 p-4 rounded-2xl gap-8 justify-center">
                         <h3 className="text-3xl font-bold">Informações</h3>
                         
+                        <div className="flex flex-col gap-1 text-center">
+                            <h3 className="text-xl text-white/80">Quantidade de músicas encontradas</h3>
+                            <p className="text-3xl font-extrabold text-pink-400">{tracks.length}</p>
+                        </div>
+
                         <div className="flex flex-col gap-1 text-center">
                             <h3 className="text-xl text-white/80">Quantidade de álbuns encontrados</h3>
                             <p className="text-3xl font-extrabold text-green-400">{albuns.length}</p>
