@@ -72,6 +72,7 @@ class ChartSpider(Spider):
             artist = line.css("td.globalchart-track-artist-name a::text").get()
             cover = line.css("td.globalchart-image img::attr(src)").get()
             url = line.css("td.globalchart-name a::attr(href)").get()
+            artist_url = line.css("td.globalchart-track-artist-name a::attr(href)").get()
 
             yield AlbumItem(rank=rank, name=name, artist=artist, cover=cover, url=response.urljoin(url),
-                chart="new_releases", time=scrap_time)
+                            artist_url=response.urljoin(artist_url), chart="new_releases", time=scrap_time)

@@ -48,7 +48,7 @@ class TagSpider(Spider):
             if tag_text not in self.initial_tags:
                 self.initial_tags.append(tag_text)
 
-        custom_tags = ['future funk', 'vocaloid', 'stoner metal', 'grunge', 'mpb']
+        custom_tags = ['future funk', 'vocaloid', 'stoner metal', 'grunge', 'mpb', 'psychedelic rock']
 
         for tag in custom_tags:
             if tag not in self.initial_tags:

@@ -1,9 +1,7 @@
-from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 from musicrawling.items import TrackItem, ArtistItem, AlbumItem
 import pymongo
 from itemadapter import ItemAdapter
-from datetime import datetime
 
 class ValidationPipeline:
     def process_item(self, item, spider):
@@ -70,35 +68,11 @@ class NormalizePipeline:
 
         return item
 
-'''class MongoPipeline:
-    def __init__(self, mongo_uri, mongo_db):
-        self.mongo_uri = mongo_uri
-        self.mongo_db = mongo_db
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        return cls(
-            mongo_uri=crawler.settings.get('MONGO_URI', 'mongodb://localhost:27017'),
-            mongo_db=crawler.settings.get('MONGO_DATABASE', 'musicrawling')
-        )
-
-    def open_spider(self, spider):
-        self.client = pymongo.MongoClient(self.mongo_uri)
-        self.db = self.client[self.mongo_db]
-
-    def close_spider(self, spider):
-        self.client.close()
-
-    def process_item(self, item, spider):
-        self.db['music'].insert_one(dict(item))
-        return item'''
-
 COLLECTION_MAP = {
     TrackItem: "tracks",
     ArtistItem: "artists",
     AlbumItem: "albums",
 }
-
 
 class MongoPipeline:
     def __init__(self, mongo_uri, mongo_db):
@@ -123,9 +97,9 @@ class MongoPipeline:
             collection = self.db[collection_name]
 
             collection.create_index(
-                [("url", pymongo.ASCENDING), ("tag", pymongo.ASCENDING)],
+                [("url", pymongo.ASCENDING), ("chart", pymongo.ASCENDING), ("tag", pymongo.ASCENDING)],
                 unique=True,
-                name="uniq_url_tag"
+                name="uniq_url_chart_tag"
             )
 
     def close_spider(self, spider):
@@ -135,15 +109,23 @@ class MongoPipeline:
         adapter = ItemAdapter(item)
         item_dict = adapter.asdict()
 
-        if isinstance(item_dict.get("time"), datetime):
-            item_dict["time"] = item_dict["time"].isoformat()
-
         collection_name = COLLECTION_MAP.get(type(item), "items")
+        collection = self.db[collection_name]
 
-        try:
-            self.db[collection_name].insert_one(item_dict)
-        except pymongo.errors.DuplicateKeyError:
-            spider.logger.debug(
-                f"duplicate item in MongoDB: {item_dict.get('url')} - Tag: {item_dict.get('tag')}")
+        query = {
+            "url": item_dict["url"],
+            "chart": item_dict["chart"],
+            "tag": item_dict.get("tag"),
+        }
+
+        found_at = item_dict.get("time")
+
+        item_dict_without_time = {
+            key: value
+            for key, value in item_dict.items()
+            if key != "time"
+        }
+
+        collection.update_one(query, {"$set": {"time": found_at}, "$setOnInsert": item_dict_without_time}, upsert=True)
 
         return item
