@@ -1,16 +1,16 @@
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 import pymongo
-from musicrawling.items import TrackItem, ArtistItem
+from musicrawling.items import TrackItem, ArtistItem, AlbumItem
 
 class ValidationPipeline:
     def process_item(self, item, spider):
-        if isinstance(item, TrackItem):
+        if isinstance(item, (TrackItem, AlbumItem)):
             fields_to_search = ['rank', 'name', 'artist', 'url', 'chart', 'time']
         elif isinstance(item, ArtistItem):
             fields_to_search = ['rank', 'name', 'url', 'chart', 'time']
         else:
-            raise DropItem("Item is not of type TrackItem or ArtistItem")
+            raise DropItem("Item is not of type TrackItem, AlbumItem, or ArtistItem")
 
         fields_missing = self.get_missing_fields(item, fields_to_search)
 
@@ -62,6 +62,9 @@ class NormalizePipeline:
 
         if adapter.get('tag'):
             adapter['tag'] = adapter['tag'].strip()
+
+        if adapter.get('artist_url'):
+            adapter['artist_url'] = adapter['artist_url'].strip()
 
         return item
 
