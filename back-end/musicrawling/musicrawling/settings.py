@@ -88,3 +88,13 @@ ITEM_PIPELINES = {
 
 # Set settings whose default value is deprecated to a future-proof value
 FEED_EXPORT_ENCODING = "utf-8"
+
+MONGO_URI = "mongodb://localhost:27017"
+MONGO_DATABASE = "music_crawler"
+
+ITEM_PIPELINES = {
+    "musicrawling.pipelines.ValidationPipeline": 100,
+    "musicrawling.pipelines.NormalizePipeline": 200,
+    "musicrawling.pipelines.DuplicatesPipeline": 300,
+    "musicrawling.pipelines.MongoPipeline": 400,
+}
