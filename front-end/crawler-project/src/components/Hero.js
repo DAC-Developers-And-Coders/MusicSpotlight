@@ -23,7 +23,7 @@ const Hero = () => {
                 </div>
 
                 <div className="flex flex-col gap-4 p-4">
-                    <h2 className="text-3xl font-bold text-center">Últimas novidades!</h2>
+                    <h2 className="text-3xl font-bold text-center">Novos Álbuns!</h2>
                     <div className="flex flex-col gap-5">
                         {[...top10NewMusics].map((music) => (
                             <div key={music.id} className="grid grid-cols-3 items-center text-center gap-2">
