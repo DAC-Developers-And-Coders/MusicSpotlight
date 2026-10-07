@@ -390,6 +390,12 @@ Instale as dependências:
 npm install
 ```
 
+Instale a biblioteca de Gráfico:
+
+```bash
+npm install recharts
+```
+
 Execute o servidor de desenvolvimento:
 
 ```bash
