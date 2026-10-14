@@ -1,4 +1,4 @@
-# 🎵 MusicSpotlight
+# 🎶 MusicSpotlight
 
 Web Scraper integrado a um banco de dados não relacional, uma API REST e um dashboard Front-End para visualização de informações musicais.
 
